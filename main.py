@@ -4,7 +4,7 @@ from PIL import Image
 import numpy as np
 
 # Load the model (adjust the path to your saved model)
-model = tf.keras.models.load_model('cnn_model.h5')
+model = load_model('./cnn_model.h5')
 
 # Function to preprocess the input images
 def preprocess_image(image):
