@@ -21,13 +21,13 @@ def main():
 
     # File uploader
     uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png'])
+    
     if uploaded_file is not None:
-        image = Image.open(uploaded_file).convert('L')  # Convert to grayscale
         st.image(image, caption='Uploaded Image', use_column_width=True)
         st.write("")
 
         # Preprocess and predict
-        processed_image = preprocess_image(image)
+        processed_image = preprocess_image(uploaded_file)
         prediction = model.predict(processed_image)
 
         # Display the prediction
