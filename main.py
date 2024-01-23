@@ -4,8 +4,8 @@ from PIL import Image
 from tensorflow.keras.models import load_model
 import numpy as np
 
-# Load the model (adjust the path to your saved model)
-model = load_model('cnn_model.h5')
+# Load the model
+model = load_model('./cnn_model.h5')
 
 # Function to preprocess the input images
 def preprocess_image(image):
@@ -16,22 +16,26 @@ def preprocess_image(image):
     return image
 
 # Streamlit UI
-st.title('Brain Tumor Prediction')
-st.write("Upload an image and the model will predict if there is a tumor or not.")
+def main():
+    st.title("Brain Tumor Prediction")
 
-# File uploader
-uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png'])
-if uploaded_file is not None:
-    image = Image.open(uploaded_file).convert('L')  # Convert to grayscale
-    st.image(image, caption='Uploaded Image', use_column_width=True)
-    st.write("")
+    # File uploader
+    uploaded_file = st.file_uploader("Choose an image...", type=['jpg', 'jpeg', 'png'])
+    if uploaded_file is not None:
+        image = Image.open(uploaded_file).convert('L')  # Convert to grayscale
+        st.image(image, caption='Uploaded Image', use_column_width=True)
+        st.write("")
 
-    # Preprocess and predict
-    processed_image = preprocess_image(image)
-    prediction = model.predict(processed_image)
+        # Preprocess and predict
+        processed_image = preprocess_image(image)
+        prediction = model.predict(processed_image)
 
-    # Display the prediction
-    if prediction[0][0] > 0.5:  # Assuming your model outputs a probability
-        st.write('Prediction: Brain Tumor detected')
-    else:
-        st.write('Prediction: No Brain Tumor detected')
+        # Display the prediction
+        if prediction[0][0] > 0.5:  # Assuming your model outputs a probability
+            st.write('Prediction: Brain Tumor detected')
+        else:
+            st.write('Prediction: No Brain Tumor detected')
+
+
+
+
